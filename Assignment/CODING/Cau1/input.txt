@@ -1,0 +1,25 @@
+GiaiDau MaGD,MuaGiai,TenGD,NgayBatDau,NgayKetThuc MaGD
+NhaTaiTro MaNTT,TenNTT,DiaChi,SoDienThoai MaNTT
+VongDau MaVongDau,TenVongDau MaVongDau
+TranDau MaTran,NgayDau,ThoiGian,DiaDiem,DoiNha,DoiKhach MaTran
+CauLacBo MaCLB,TenCLB MaCLB
+SanNha MaSan,TenSan,DiaChi,SucChua MaSan
+HuanLuyenVien MaHLV,TenHLV,CuongVi MaHLV
+CauThu MaCT,SoAo,ViTri MaCT
+CauThuNoi QueQuan
+CauThuNgoai QuocTich
+ThanhTuu MaTT,TenTT,MuaGiai,MuaGiaiDat,NgayDat MaTT
+GiaiDau-NhaTaiTro N-N
+GiaiDau-VongDau 1-N
+GiaiDau-CauLacBo 1-N
+CauLacBo-NhaTaiTro N-N
+CauLacBo-SanNha 1-1
+CauLacBo-TranDau 1-N
+CauLacBo-HuanLuyenVien 1-N 
+CauLacBo-CauThu 1-N
+CauThu-TranDau N-N
+CauThu-CauThuNoi Inheritance
+CauThu-CauThuNgoai Inheritance
+CauThu-ThanhTuu Strong-Weak
+
+
