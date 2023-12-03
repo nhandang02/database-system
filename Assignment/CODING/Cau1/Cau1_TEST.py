@@ -32,16 +32,20 @@ class Relationship():
 def ERDToRelationalSchema(inputPath, outputPath):
     database = []  # Chứa các thực thể của mô hình ERD
     relationships = []  # Chứa mối quan hệ giữa các thực thể của mô hình ERD
-    myInput = open(inputPath, 'r')
-    lines = myInput.readlines()
-    for line in lines:
-        data = line.rstrip('\n').split(" ")
-        if (len(data) == 3):
-            database.append(ERD(data[0], data[1], data[2]))
-        if (len(data) == 2):
-            entities = data[0].split("-")
-            relationships.append(Relationship(
-                entities[0], entities[1], data[1]))
+    with open(inputPath, 'r') as myInput:
+        for line in myInput:
+            data = line.split()
+            if len(data) == 3:
+                database.append(ERD(data[0], data[1], data[2]))
+            elif len(data) == 2:
+                if '-' not in data[0]:
+                    entityName = data[0]
+                    attributes = data[1]
+                    primaryKey = ""
+                    database.append(ERD(entityName, attributes, primaryKey))
+                else:
+                    entities = data[0].split("-")
+                    relationships.append(Relationship(entities[0], entities[1], data[1]))
 
     resultDatabase = []  # Chứa các bảng dữ liệu
     resultRelationships = []  # Chứa mối quan hệ giữa các bảng
@@ -112,6 +116,14 @@ def ERDToRelationalSchema(inputPath, outputPath):
                                 firstEntity.name, nameNewTable, "1-N"))
                             resultRelationships.append(Relationship(
                                 secondEntity.name, nameNewTable, "1-N"))
+                            if firstEntity.name not in existed:
+                                resultDatabase.append(RelationalSchema(
+                                    firstEntity.name, firstEntity.attributes, firstEntity.primaryKey, ''))
+                                existed.append(firstEntity.name)
+                            if secondEntity.name not in existed:
+                                resultDatabase.append(RelationalSchema(
+                                    secondEntity.name, secondEntity.attributes, secondEntity.primaryKey, ''))
+                                existed.append(secondEntity.name)
 
                 # Quan hệ kế thừa
                 elif relationship.type == 'Inheritance':
@@ -127,6 +139,16 @@ def ERDToRelationalSchema(inputPath, outputPath):
                                 resultDatabase.append(RelationalSchema(
                                     secondEntity.name, secondEntity.attributes + ',' + primaryKey, primaryKey, primaryKey))
                                 existed.append(secondEntity.name)
+                
+                elif relationship.type == "Strong-Weak":
+                    foreignKey = firstEntity.primaryKey
+                    for secondEntity in database:
+                        if secondEntity.name not in existed:
+                            resultDatabase.append(RelationalSchema(secondEntity.name,
+                                                                    secondEntity.attributes + ',' + foreignKey,
+                                                                    secondEntity.primaryKey + ',' + foreignKey,
+                                                                    foreignKey))
+                            
 
     myOutput = open(outputPath, 'w')
     for i in range(len(resultDatabase)):

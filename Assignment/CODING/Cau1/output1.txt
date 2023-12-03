@@ -1,0 +1,31 @@
+Các bảng:
+GD_NTT(MaGD,MaNTT,ThoiGianHopTac,SoTienTaiTro) PK:MaGD,MaNTT FK:MaGD,MaNTT
+GiaiDau(MaGD,MuaGiai,TenGD,NgayBatDau,NgayKetThuc) PK:MaGD
+NhaTaiTro(MaNTT,TenNTT,DiaChi,SoDienThoai) PK:MaNTT
+VongDau(MaVongDau,TenVongDau,MaGD) PK:MaVongDau FK:MaGD
+CauLacBo(MaCLB,TenCLB,MaGD) PK:MaCLB FK:MaGD
+CLB_NTT(MaCLB,MaNTT,ThoiGianHopTac,SoTienTaiTro) PK:MaCLB,MaNTT FK:MaCLB,MaNTT
+SanNha(MaSan,TenSan,DiaChi,SucChua,MaCLB) PK:MaSan FK:MaCLB
+TranDau(MaTran,NgayDau,ThoiGian,DiaDiem,DoiNha,DoiKhach,MaCLB) PK:MaTran FK:MaCLB
+HuanLuyenVien(MaHLV,TenHLV,CuongVi,MaCLB) PK:MaHLV FK:MaCLB
+CauThu(MaCT,SoAo,ViTri,MaCLB) PK:MaCT FK:MaCLB
+CT_TD(MaCT,MaTran,BanThang,TheDo,TheVang) PK:MaCT,MaTran FK:MaCT,MaTran
+CauThuNoi(QueQuan,MaCT) PK:MaCT FK:MaCT
+CauThuNgoai(QuocTich,MaCT) PK:MaCT FK:MaCT
+ThanhTuu(MaTT,TenTT,MuaGiai,MuaGiaiDat,NgayDat,MaCT) PK:MaTT,MaCT FK:MaCT
+
+Các mối quan hệ:
+GiaiDau-NhaTaiTro: N-N
+GiaiDau-VongDau: 1-N
+GiaiDau-CauLacBo: 1-N
+CauLacBo-NhaTaiTro: N-N
+CauLacBo-SanNha: 1-1
+CauLacBo-TranDau: 1-N
+CauLacBo-HuanLuyenVien: 1-N
+CauLacBo-CauThu: 1-N
+CauThu-TranDau: N-N
+CauThu-CauThuNoi: Inheritance
+CauThu-CauThuNgoai: Inheritance
+CauThu-ThanhTuu: Strong-Weak
+
+

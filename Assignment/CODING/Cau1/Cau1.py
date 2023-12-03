@@ -35,7 +35,7 @@ class Relationship:
 def ERD2RS(inputPath, outputPath):
     Entities = [] # Khởi tạo mảng chứ các thực thể
     Relationships = [] # Khởi tạo mảng chứ các quan hệ giữa các thực thể
-    Table = [] # Khởi tạo mảng chứ các table đã được chuyển từ ERD sang RelationalSchema
+    Tables = [] # Khởi tạo mảng chứ các table đã được chuyển từ ERD sang RelationalSchema
     AERelationship = [] # Khởi tạo mảng chứ các quan hệ với thực thể kết hợp
     TableExisted = [] # Khởi tạo mảng chứ tên các table đã được khởi tạo
 
@@ -64,12 +64,12 @@ def ERD2RS(inputPath, outputPath):
                         for secondEntity in Entities:
                             if relationship.secondEntity == secondEntity.name:
                                 if firstEntity.name not in TableExisted:
-                                    Table.append(RelationalSchema(firstEntity.name,
+                                    Tables.append(RelationalSchema(firstEntity.name,
                                                                            firstEntity.attributes,
                                                                            firstEntity.primaryKey, ""))
                                     TableExisted.append(firstEntity.name)
                                 if secondEntity.name not in TableExisted:
-                                    Table.append(RelationalSchema(secondEntity.name,
+                                    Tables.append(RelationalSchema(secondEntity.name,
                                                                            secondEntity.attributes + ',' + foreignKey,
                                                                            secondEntity.primaryKey, foreignKey))
                                     TableExisted.append(secondEntity.name)
@@ -80,18 +80,18 @@ def ERD2RS(inputPath, outputPath):
                         for secondEntity in Entities:
                             if relationship.secondEntity == secondEntity.name:
                                 if firstEntity.name not in TableExisted:
-                                    Table.append(RelationalSchema(firstEntity.name,
+                                    Tables.append(RelationalSchema(firstEntity.name,
                                                                            firstEntity.attributes,
                                                                            firstEntity.primaryKey, ""))
                                     TableExisted.append(firstEntity.name)
                                 if secondEntity.name in TableExisted:
-                                    for entity in Table:
+                                    for entity in Tables:
                                         if entity.name == secondEntity.name:
                                             entity.attributes += ',' + foreignKey
                                             entity.foreignKey += ',' + foreignKey
                                             break
                                 else:
-                                    Table.append(RelationalSchema(secondEntity.name,
+                                    Tables.append(RelationalSchema(secondEntity.name,
                                                                            secondEntity.attributes + ',' + foreignKey,
                                                                            secondEntity.primaryKey, foreignKey))
                                     TableExisted.append(secondEntity.name)
@@ -106,7 +106,7 @@ def ERD2RS(inputPath, outputPath):
                                     "Vui lòng nhập tên quan hệ mới được tạo ra từ quan hệ N-N trên: ")
                                 attributesNewTable = input(
                                     "Vui lòng nhập các thuộc tính muốn thêm cho quan hệ này: ")
-                                Table.append(RelationalSchema(nameNewTable, firstEntity.primaryKey + ',' + secondEntity.primaryKey + ',' + attributesNewTable,
+                                Tables.append(RelationalSchema(nameNewTable, firstEntity.primaryKey + ',' + secondEntity.primaryKey + ',' + attributesNewTable,
                                                                     firstEntity.primaryKey + ',' + secondEntity.primaryKey, firstEntity.primaryKey + ',' + secondEntity.primaryKey))
                                 TableExisted.append(nameNewTable)
                                 AERelationship.append(Relationship(
@@ -120,12 +120,12 @@ def ERD2RS(inputPath, outputPath):
                         for secondEntity in Entities:
                             if relationship.secondEntity == secondEntity.name:
                                 if firstEntity.name not in TableExisted:
-                                    Table.append(RelationalSchema(firstEntity.name,
+                                    Tables.append(RelationalSchema(firstEntity.name,
                                                                            firstEntity.attributes,
                                                                            firstEntity.primaryKey, ""))
                                     TableExisted.append(firstEntity.name)
                                 if secondEntity.name not in TableExisted:
-                                    Table.append(RelationalSchema(secondEntity.name,
+                                    Tables.append(RelationalSchema(secondEntity.name,
                                                                            secondEntity.attributes + ',' + primaryKey,
                                                                            primaryKey, primaryKey))
                                     TableExisted.append(secondEntity.name)
@@ -135,7 +135,7 @@ def ERD2RS(inputPath, outputPath):
                         foreignKey = firstEntity.primaryKey
                         for secondEntity in Entities:
                             if secondEntity.name not in TableExisted:
-                                Table.append(RelationalSchema(secondEntity.name,
+                                Tables.append(RelationalSchema(secondEntity.name,
                                                                        secondEntity.attributes + ',' + foreignKey,
                                                                        secondEntity.primaryKey + ',' + foreignKey,
                                                                        foreignKey))
@@ -143,7 +143,7 @@ def ERD2RS(inputPath, outputPath):
 
     with open(outputPath, 'w', encoding='utf-8') as myOutput:
         myOutput.write("Các bảng:\n")
-        for schema in Table:
+        for schema in Tables:
             myOutput.write(str(schema) + '\n')
 
         myOutput.write("\nCác mối quan hệ:\n")
