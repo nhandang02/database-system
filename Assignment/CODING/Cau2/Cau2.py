@@ -37,19 +37,37 @@ class FDSet(set):
         return resLeftAttributet
 
     # Hàm tính bao đóng
+    # def FindClose(self, attributes):
+    #     X = set(attributes)
+    #     still_change = True
+    #     while still_change:
+    #         still_change = False
+    #         '''Duyệt qua tất cả phụ thuộc hàm'''
+    #         for fd in self:
+    #             '''Nếu các thuộc tính bên trái của phụ thuộc hàm là tập con của tập X
+    #             và (các thuộc tính bên phải chưa có trong X) thì cập nhật các thuộc tính bên phải đó vào X'''
+    #             if fd.LeftAttribute.issubset(X) and not fd.RightAttributes.issubset(X):
+    #                 still_change = True
+    #                 X.update(fd.RightAttributes)
+    #     return X
     def FindClose(self, attributes):
         X = set(attributes)
-        still_change = True
-        while still_change:
-            still_change = False
-            '''Duyệt qua tất cả phụ thuộc hàm'''
+        prev_length = 0
+
+        while True:
             for fd in self:
-                '''Nếu các thuộc tính bên trái của phụ thuộc hàm là tập con của tập X
-                và (các thuộc tính bên phải chưa có trong X) thì cập nhật các thuộc tính bên phải đó vào X'''
                 if fd.LeftAttribute.issubset(X) and not fd.RightAttributes.issubset(X):
-                    still_change = True
                     X.update(fd.RightAttributes)
+
+            # Kiểm tra xem tập X có thêm được bất kỳ thuộc tính mới nào không
+            if len(X) == prev_length:
+                break
+            prev_length = len(X)
+
         return X
+
+    
+    
 
     # Hàm tìm khóa
     def Findkeys(self, attributes):

@@ -1,4 +1,3 @@
 Bảng: R1
 Bao đóng của tập X nhập vào : B,D,E,G,C,A
 Các khóa: AB,BC,BD,BE,CD,CE,CG,
-

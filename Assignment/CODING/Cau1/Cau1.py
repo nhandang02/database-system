@@ -152,4 +152,4 @@ def ERD2RS(inputPath, outputPath):
 
 
 
-ERD2RS("input.txt", "output.txt")
+ERD2RS("input1.txt", "output1.txt")

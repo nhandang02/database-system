@@ -192,7 +192,7 @@ VALUES ('TD01', '2023-02-15', '19:45', N'Địa điểm 1', N'Đội nhà 1', N'
 
 INSERT INTO CT_TD (BanThang, TheVang, TheDo, MaTran, MaCT)
 VALUES (1, 0, 1, 'TD01', 'CT01'),
-(0, 1, 0, 'TD02', 'CT02');
+(0, 1, 0, 'TD02', 'CTN01');
 
 --FUNCTION
 -- Tạo mã cầu thủ nội
@@ -327,6 +327,13 @@ BEGIN
     END
 END;
 
+EXEC ThemCauThu 11, N'Hậu vệ', 'CLB01', NULL,  N'Anh'
+EXEC ThemCauThu 72, N'Thủ môn', 'CLB01', NULL, N'Pháp'
+EXEC ThemCauThu 27, N'Tiền đạo', 'CLB01', NULL, N'Đức'
+EXEC ThemCauThu 17, N'Tiền vệ', 'CLB01', NULL, N'Hàn Quốc'
+EXEC ThemCauThu 37, N'Tiền đạo', 'CLB01', NULL, N'Nhật Bản'
+
+--SELECT * FROM CauThuNgoai
 
 
 
